@@ -4,6 +4,9 @@ import java.time.Instant;
 import java.util.Map;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -13,24 +16,32 @@ import org.springframework.web.client.RestClient;
 public class WechatApiHttpClient implements WechatApiClient {
     private static final String WECHAT_HOST = "api.weixin.qq.com";
 
-    private final RestClient restClient = RestClient.create();
+    private final RestClient restClient;
+    private final ObjectMapper objectMapper;
     private final String appId;
     private final String appSecret;
     private String cachedAccessToken;
     private Instant cachedAccessTokenExpiresAt = Instant.EPOCH;
 
+    @Autowired
     public WechatApiHttpClient(
             @Value("${health.wechat.app-id:}") String appId,
             @Value("${health.wechat.app-secret:}") String appSecret
     ) {
+        this(appId, appSecret, RestClient.create());
+    }
+
+    WechatApiHttpClient(String appId, String appSecret, RestClient restClient) {
         this.appId = appId;
         this.appSecret = appSecret;
+        this.restClient = restClient;
+        this.objectMapper = new ObjectMapper();
     }
 
     @Override
     public WechatSession fetchSession(String loginCode) {
         assertConfigured();
-        Code2SessionResponse response = restClient.get()
+        Code2SessionResponse response = readWechatResponse(restClient.get()
                 .uri(builder -> builder
                         .scheme("https")
                         .host(WECHAT_HOST)
@@ -40,8 +51,7 @@ public class WechatApiHttpClient implements WechatApiClient {
                         .queryParam("js_code", loginCode)
                         .queryParam("grant_type", "authorization_code")
                         .build())
-                .retrieve()
-                .body(Code2SessionResponse.class);
+                .retrieve(), Code2SessionResponse.class);
         if (response == null || !StringUtils.hasText(response.openId())) {
             throw new WechatApiException(wechatError(response == null ? null : response.errmsg()));
         }
@@ -51,7 +61,7 @@ public class WechatApiHttpClient implements WechatApiClient {
     @Override
     public WechatPhoneNumber fetchPhoneNumber(String phoneCode) {
         assertConfigured();
-        PhoneNumberResponse response = restClient.post()
+        PhoneNumberResponse response = readWechatResponse(restClient.post()
                 .uri(builder -> builder
                         .scheme("https")
                         .host(WECHAT_HOST)
@@ -59,8 +69,7 @@ public class WechatApiHttpClient implements WechatApiClient {
                         .queryParam("access_token", accessToken())
                         .build())
                 .body(Map.of("code", phoneCode))
-                .retrieve()
-                .body(PhoneNumberResponse.class);
+                .retrieve(), PhoneNumberResponse.class);
         if (response == null || response.phoneInfo() == null
                 || !StringUtils.hasText(response.phoneInfo().phoneNumber())) {
             throw new WechatApiException(wechatError(response == null ? null : response.errmsg()));
@@ -72,7 +81,7 @@ public class WechatApiHttpClient implements WechatApiClient {
         if (StringUtils.hasText(cachedAccessToken) && Instant.now().isBefore(cachedAccessTokenExpiresAt)) {
             return cachedAccessToken;
         }
-        AccessTokenResponse response = restClient.get()
+        AccessTokenResponse response = readWechatResponse(restClient.get()
                 .uri(builder -> builder
                         .scheme("https")
                         .host(WECHAT_HOST)
@@ -81,14 +90,25 @@ public class WechatApiHttpClient implements WechatApiClient {
                         .queryParam("appid", appId)
                         .queryParam("secret", appSecret)
                         .build())
-                .retrieve()
-                .body(AccessTokenResponse.class);
+                .retrieve(), AccessTokenResponse.class);
         if (response == null || !StringUtils.hasText(response.accessToken())) {
             throw new WechatApiException(wechatError(response == null ? null : response.errmsg()));
         }
         cachedAccessToken = response.accessToken();
         cachedAccessTokenExpiresAt = Instant.now().plusSeconds(Math.max(60, response.expiresIn() - 60));
         return cachedAccessToken;
+    }
+
+    private <T> T readWechatResponse(RestClient.ResponseSpec responseSpec, Class<T> responseType) {
+        String body = responseSpec.body(String.class);
+        if (!StringUtils.hasText(body)) {
+            return null;
+        }
+        try {
+            return objectMapper.readValue(body, responseType);
+        } catch (JsonProcessingException exception) {
+            throw new WechatApiException("微信授权失败");
+        }
     }
 
     private void assertConfigured() {
