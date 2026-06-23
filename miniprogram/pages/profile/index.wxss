@@ -1,0 +1,14 @@
+.user-card {
+  align-items: center;
+  display: flex;
+  padding: 30rpx;
+}
+
+.menu-card,
+.content-card {
+  padding: 28rpx;
+}
+
+.call-button {
+  margin-top: 24rpx;
+}

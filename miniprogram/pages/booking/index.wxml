@@ -1,0 +1,101 @@
+<view class="page">
+  <view class="section-title">确认预约</view>
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <block wx:else>
+    <view class="card summary-card">
+      <view class="summary-title">预约摘要</view>
+      <view class="summary-grid">
+        <view wx:for="{{summaryRows}}" wx:key="label" class="summary-row">
+          <view class="summary-label">{{item.label}}</view>
+          <view class="summary-value">{{item.value}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section-title section-gap">选择服务</view>
+    <view class="form-card">
+      <view class="field">
+        <view class="label">服务项目</view>
+        <picker mode="selector" range="{{serviceItems}}" range-key="name" value="{{serviceIndex}}" bindchange="onServiceChange">
+          <view class="picker-value">{{selectedServiceName}}</view>
+        </picker>
+      </view>
+
+      <view class="field">
+        <view class="label">服务技师</view>
+        <picker mode="selector" range="{{therapists}}" range-key="name" value="{{therapistIndex}}" bindchange="onTherapistChange">
+          <view class="picker-value">{{selectedTherapistName}}</view>
+        </picker>
+      </view>
+
+      <view class="field">
+        <view class="label">预约日期</view>
+        <picker mode="date" value="{{date}}" start="{{minDate}}" bindchange="onDateChange">
+          <view class="picker-value">{{date}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">可约时段</view>
+      <block wx:if="{{slotLoading}}">
+        <view class="loading">正在加载时段...</view>
+      </block>
+      <block wx:elif="{{!slots.length}}">
+        <view class="empty">{{slotEmptyText}}</view>
+      </block>
+      <block wx:else>
+        <view class="slot-grid">
+          <view
+            wx:for="{{slots}}"
+            wx:key="startTime"
+            class="slot {{item.activeClass}}"
+            data-index="{{index}}"
+            bindtap="selectSlot"
+          >
+            {{item.label}}
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <view class="section">
+      <view class="section-title">联系人</view>
+      <view class="form-card">
+        <view wx:if="{{!wechatAuthorized}}" class="auth-panel">
+          <view class="auth-copy">预约需先授权微信手机号</view>
+          <button
+            class="btn auth-btn"
+            open-type="getPhoneNumber"
+            bindgetphonenumber="onWechatPhoneAuth"
+            loading="{{authLoading}}"
+          >
+            微信授权手机号
+          </button>
+        </view>
+        <view wx:else class="auth-state">已授权手机号 {{authPhone}}</view>
+        <view class="field">
+          <view class="label">姓名</view>
+          <input class="input" placeholder="请输入到店人姓名" value="{{contactName}}" bindinput="onContactNameInput" />
+        </view>
+        <view class="field">
+          <view class="label">手机号</view>
+          <input class="input" type="number" placeholder="请输入手机号" value="{{contactPhone}}" bindinput="onContactPhoneInput" />
+        </view>
+        <view class="field">
+          <view class="label">备注</view>
+          <textarea class="textarea" placeholder="可填写身体不适、力度偏好等" value="{{userNote}}" bindinput="onNoteInput" />
+        </view>
+      </view>
+    </view>
+
+    <view class="footer-action">
+      <view class="footer-summary">
+        <view class="footer-price">{{selectedService.priceText || '待确认'}}</view>
+        <view class="footer-subtitle">{{selectedSlot.label || '请选择预约时间'}}</view>
+      </view>
+      <view class="btn footer-btn {{canSubmit ? '' : 'btn-disabled'}}" bindtap="submitBooking">{{submitText}}</view>
+    </view>
+  </block>
+</view>

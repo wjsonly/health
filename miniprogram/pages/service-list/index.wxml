@@ -1,0 +1,50 @@
+<view class="page">
+  <view class="section-title">预约项目</view>
+  <block wx:if="{{loading}}">
+    <view class="loading">加载中...</view>
+  </block>
+  <block wx:else>
+    <view class="category-tabs">
+      <view
+        wx:for="{{categories}}"
+        wx:key="*this"
+        class="category-tab {{activeCategory === item ? 'category-tab-active' : ''}}"
+        data-category="{{item}}"
+        bindtap="onCategoryTap"
+      >
+        {{item}}
+      </view>
+    </view>
+
+    <block wx:if="{{!services.length}}">
+      <view class="empty">当前分类暂无可预约项目</view>
+    </block>
+    <block wx:else>
+      <view
+        wx:for="{{services}}"
+        wx:key="id"
+        class="card list-card service-card"
+        data-id="{{item.id}}"
+        bindtap="goDetail"
+      >
+        <image wx:if="{{item.displayImageUrl}}" class="service-image" src="{{item.displayImageUrl}}" mode="aspectFill" />
+        <view class="row">
+          <view class="card-main">
+            <view class="card-kicker">{{item.primaryTag}}</view>
+            <view class="card-title">{{item.name}}</view>
+            <view class="card-subtitle">{{item.categoryName}} · {{item.durationText}}</view>
+          </view>
+          <view class="price">{{item.priceText}}</view>
+        </view>
+        <view class="tag-row">
+          <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</view>
+        </view>
+        <view class="card-subtitle">{{item.suitableText}}</view>
+        <view class="card-actions">
+          <view class="mini-link">查看详情</view>
+          <view class="btn btn-small" data-id="{{item.id}}" catchtap="bookService">预约</view>
+        </view>
+      </view>
+    </block>
+  </block>
+</view>

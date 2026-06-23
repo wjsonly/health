@@ -1,0 +1,41 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <block wx:else>
+    <view class="card profile-card">
+      <view class="avatar avatar-large">{{therapist.initial}}</view>
+      <view class="profile-main">
+        <view class="status profile-status">{{therapist.availableText}}</view>
+        <view class="card-title detail-title">{{therapist.name}}</view>
+        <view class="card-subtitle">{{therapist.level}} · {{therapist.yearsText}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">擅长方向</view>
+      <view class="card content-card">
+        <view class="tag" wx:for="{{specialties}}" wx:key="*this">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">服务标签</view>
+      <view class="card content-card">
+        <view class="tag" wx:for="{{therapist.tags}}" wx:key="*this">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">个人介绍</view>
+      <view class="card content-card intro-text">{{therapist.introText}}</view>
+    </view>
+
+    <view class="footer-action">
+      <view class="footer-info">
+        <view class="footer-name">{{therapist.name}}</view>
+        <view class="footer-subtitle">{{therapist.availableText}}</view>
+      </view>
+      <view class="btn footer-btn" bindtap="bookTherapist">预约TA</view>
+    </view>
+  </block>
+</view>

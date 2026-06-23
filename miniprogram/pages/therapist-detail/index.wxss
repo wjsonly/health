@@ -1,0 +1,69 @@
+.profile-card {
+  align-items: center;
+  display: flex;
+  padding: 30rpx;
+}
+
+.profile-main {
+  flex: 1;
+}
+
+.profile-status {
+  display: inline-flex;
+  margin-bottom: 10rpx;
+}
+
+.avatar-large {
+  height: 112rpx;
+  width: 112rpx;
+}
+
+.detail-title {
+  font-size: 40rpx;
+  line-height: 52rpx;
+}
+
+.content-card {
+  padding: 28rpx;
+}
+
+.intro-text {
+  color: #405047;
+  font-size: 26rpx;
+  line-height: 40rpx;
+}
+
+.footer-action {
+  align-items: center;
+  background: #ffffff;
+  border-top: 1rpx solid #e1e7df;
+  bottom: 0;
+  box-sizing: border-box;
+  display: flex;
+  gap: 18rpx;
+  left: 0;
+  padding: 18rpx 28rpx calc(18rpx + env(safe-area-inset-bottom));
+  position: sticky;
+  right: 0;
+}
+
+.footer-info {
+  flex: 1;
+}
+
+.footer-name {
+  color: #1f2f27;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 38rpx;
+}
+
+.footer-subtitle {
+  color: #66706a;
+  font-size: 22rpx;
+  line-height: 30rpx;
+}
+
+.footer-btn {
+  min-width: 260rpx;
+}

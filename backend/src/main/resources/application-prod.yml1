@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: health-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/health?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai}
+    username: ${SPRING_DATASOURCE_USERNAME:health}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+
+server:
+  port: 8080
+
+health:
+  business-zone: Asia/Shanghai
+  upload:
+    directory: ${HEALTH_UPLOAD_DIRECTORY:./data/uploads}
+    public-prefix: /uploads/
+  wechat:
+    app-id: ${HEALTH_WECHAT_APP_ID:}
+    app-secret: ${HEALTH_WECHAT_APP_SECRET:}
+    auth:
+      token-secret: ${HEALTH_WECHAT_TOKEN_SECRET:dev-health-wechat-token-secret-change-me}
+      token-ttl-days: 30

@@ -1,0 +1,7 @@
+.worktrees/
+backend/target/
+.idea
+.env
+data/uploads/
+application.yml
+.env.example

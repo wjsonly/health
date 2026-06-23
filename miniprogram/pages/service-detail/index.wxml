@@ -1,0 +1,49 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <block wx:else>
+    <view class="card detail-hero">
+      <image wx:if="{{service.displayImageUrl}}" class="detail-image" src="{{service.displayImageUrl}}" mode="aspectFill" />
+      <view class="card-kicker">{{service.primaryTag}}</view>
+      <view class="detail-title">{{service.name}}</view>
+      <view class="card-subtitle">{{service.categoryName}} · {{service.durationText}}</view>
+      <view class="tag-row">
+        <view wx:for="{{service.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</view>
+      </view>
+      <view class="price detail-price">{{service.priceText}}</view>
+      <view class="card-subtitle original-price" wx:if="{{service.originalPriceText}}">门市价 {{service.originalPriceText}}</view>
+    </view>
+
+    <view class="section" wx:if="{{serviceHighlights.length}}">
+      <view class="section-title">适合人群</view>
+      <view class="card content-card">{{service.suitableText}}</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">服务亮点</view>
+      <view class="card content-card">
+        <view wx:for="{{serviceHighlights}}" wx:key="*this" class="bullet-row">
+          <view class="bullet-dot"></view>
+          <view class="bullet-text">{{item}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">预约须知</view>
+      <view class="card content-card">{{service.notice || '请按预约时间到店，如需调整请提前联系门店。'}}</view>
+    </view>
+
+    <view class="section">
+      <view class="section-title">门店保障</view>
+      <view class="card content-card guarantee-grid">
+        <view wx:for="{{guarantees}}" wx:key="*this" class="guarantee-item">{{item}}</view>
+      </view>
+    </view>
+
+    <view class="footer-action">
+      <view class="footer-price">{{service.priceText}}</view>
+      <view class="btn footer-btn" bindtap="bookNow">立即预约</view>
+    </view>
+  </block>
+</view>

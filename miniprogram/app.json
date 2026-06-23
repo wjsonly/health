@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/service-list/index",
+    "pages/service-detail/index",
+    "pages/therapist-list/index",
+    "pages/therapist-detail/index",
+    "pages/booking/index",
+    "pages/orders/index",
+    "pages/order-detail/index",
+    "pages/profile/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "静养堂养生馆",
+    "navigationBarBackgroundColor": "#2f6b4f",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f6f7f5"
+  },
+  "tabBar": {
+    "color": "#66706a",
+    "selectedColor": "#2f6b4f",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/orders/index",
+        "text": "订单"
+      },
+      {
+        "pagePath": "pages/profile/index",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

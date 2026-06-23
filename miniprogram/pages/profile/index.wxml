@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="card user-card">
+    <view class="avatar">静</view>
+    <view>
+      <view class="card-title">{{user.nickname}}</view>
+      <view class="card-subtitle">{{user.phone}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="card menu-card" bindtap="goOrders">
+      <view class="card-title">我的订单</view>
+      <view class="card-subtitle">查看预约、取消待到店订单</view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{store}}">
+    <view class="section-title">门店信息</view>
+    <view class="card content-card">
+      <view class="card-title">{{store.name}}</view>
+      <view class="card-subtitle">{{store.address}}</view>
+      <view class="card-subtitle">营业时间 {{store.businessStart}} - {{store.businessEnd}}</view>
+      <view class="btn btn-secondary call-button" bindtap="callStore">{{store.phone}}</view>
+    </view>
+  </view>
+</view>

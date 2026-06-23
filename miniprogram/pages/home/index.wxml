@@ -1,0 +1,94 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <block wx:else>
+    <view class="hero">
+      <view class="hero-badge">到店养生预约</view>
+      <view class="hero-title">{{store.name}}</view>
+      <view class="hero-meta">营业时间 {{store.businessStart}} - {{store.businessEnd}}</view>
+      <view class="hero-meta">{{store.address}}</view>
+      <view class="trust-strip">
+        <view wx:for="{{trustTags}}" wx:key="*this" class="trust-pill">{{item}}</view>
+      </view>
+      <view class="hero-actions">
+        <view class="btn hero-primary" bindtap="goBooking">立即预约</view>
+        <view class="btn hero-secondary" bindtap="goTherapists">选择技师</view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="quick-grid">
+        <view
+          wx:for="{{quickCategories}}"
+          wx:key="value"
+          class="quick-item"
+          data-category="{{item.value}}"
+          bindtap="goCategory"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-heading">
+        <view class="section-title">推荐项目</view>
+        <view class="section-link" bindtap="goServices">全部项目</view>
+      </view>
+      <view
+        wx:for="{{services}}"
+        wx:key="id"
+        class="card list-card service-card"
+        data-id="{{item.id}}"
+        bindtap="goServiceDetail"
+      >
+        <view class="row">
+          <view class="card-main">
+            <view class="card-kicker">{{item.primaryTag}}</view>
+            <view class="card-title">{{item.name}}</view>
+            <view class="card-subtitle">{{item.categoryName}} · {{item.durationText}}</view>
+          </view>
+          <view class="price">{{item.priceText}}</view>
+        </view>
+        <view class="tag-row">
+          <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</view>
+        </view>
+        <view class="card-subtitle">{{item.suitableText}}</view>
+        <view class="card-actions">
+          <view class="mini-link">查看详情</view>
+          <view class="btn btn-small" data-id="{{item.id}}" catchtap="bookService">预约</view>
+        </view>
+      </view>
+    </view>
+
+    <view class="section">
+      <view class="section-heading">
+        <view class="section-title">人气技师</view>
+        <view class="section-link" bindtap="goTherapists">全部技师</view>
+      </view>
+      <view
+        wx:for="{{therapists}}"
+        wx:key="id"
+        class="card list-card therapist-card"
+        data-id="{{item.id}}"
+        bindtap="goTherapistDetail"
+      >
+        <view class="avatar">{{item.initial}}</view>
+        <view class="therapist-info">
+          <view class="row">
+            <view class="card-title">{{item.name}}</view>
+            <view class="status">{{item.availableText}}</view>
+          </view>
+          <view class="card-subtitle">{{item.level}} · {{item.yearsText}}</view>
+          <view class="tag-row">
+            <view wx:for="{{item.tags}}" wx:for-item="tag" wx:key="*this" class="tag">{{tag}}</view>
+          </view>
+          <view class="card-actions">
+            <view class="mini-link">查看资料</view>
+            <view class="btn btn-small" data-id="{{item.id}}" catchtap="bookTherapist">预约TA</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

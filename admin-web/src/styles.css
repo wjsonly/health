@@ -1,0 +1,312 @@
+:root {
+  color: #1f2933;
+  background: #f5f7f9;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-width: 1024px;
+  margin: 0;
+  background: #f5f7f9;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+.admin-shell {
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  border-right: 1px solid #dfe5ec;
+  background: #ffffff;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 18px;
+  border-bottom: 1px solid #edf1f5;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  color: #ffffff;
+  background: #2f6f73;
+  font-weight: 700;
+}
+
+.brand-name {
+  color: #25313d;
+  font-weight: 650;
+}
+
+.admin-menu {
+  border-right: 0;
+  padding: 10px 8px;
+}
+
+.admin-menu .el-menu-item {
+  height: 40px;
+  margin: 2px 0;
+  border-radius: 6px;
+  color: #4a5866;
+}
+
+.admin-menu .el-menu-item.is-active {
+  color: #1f5f63;
+  background: #e8f2f1;
+}
+
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  border-bottom: 1px solid #dfe5ec;
+  background: #ffffff;
+}
+
+.admin-header h1 {
+  margin: 2px 0 0;
+  color: #202b35;
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.eyebrow,
+.page-kicker {
+  margin: 0;
+  color: #71808f;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.admin-main {
+  padding: 18px;
+}
+
+.admin-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #526170;
+}
+
+.login-page {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 32px;
+  background: #eef3f4;
+}
+
+.login-panel {
+  width: min(420px, 100%);
+  padding: 28px;
+  border: 1px solid #d9e2e7;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgb(31 41 51 / 8%);
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.login-brand h1 {
+  margin: 2px 0 0;
+  color: #202b35;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.login-form .el-form-item {
+  margin-bottom: 16px;
+}
+
+.login-submit {
+  width: 100%;
+}
+
+.page-panel {
+  min-height: 180px;
+  padding: 18px;
+  border: 1px solid #dfe5ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.page-panel h2 {
+  margin: 6px 0 0;
+  color: #1f2933;
+  font-size: 20px;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.page-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.page-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-filter {
+  width: 120px;
+}
+
+.page-alert {
+  margin-bottom: 14px;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.stat-cell {
+  min-height: 96px;
+  padding: 16px;
+  border: 1px solid #e0e7ee;
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.stat-cell span {
+  display: block;
+  color: #687887;
+  font-size: 13px;
+}
+
+.stat-cell strong {
+  display: block;
+  margin-top: 10px;
+  color: #1f2933;
+  font-size: 30px;
+  line-height: 1;
+}
+
+.dashboard-section {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid #edf1f5;
+}
+
+.section-heading h3 {
+  margin: 4px 0 0;
+  color: #1f2933;
+  font-size: 16px;
+  font-weight: 650;
+}
+
+.action-list {
+  display: grid;
+  gap: 10px;
+}
+
+.action-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px solid #e0e7ee;
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.action-row strong,
+.action-row span {
+  display: block;
+}
+
+.action-row strong {
+  color: #1f2933;
+  font-size: 14px;
+}
+
+.action-row span,
+.table-muted {
+  color: #687887;
+  font-size: 13px;
+}
+
+.action-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 14px;
+}
+
+.inline-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 12px;
+  margin-bottom: 14px;
+  padding: 14px 14px 0;
+  border: 1px solid #e0e7ee;
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.inline-form .el-form-item {
+  margin-bottom: 14px;
+}
+
+.schedule-batch-heading {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 18px 0 10px;
+}
+
+.schedule-batch-heading h3 {
+  margin: 4px 0 0;
+}
+
+.schedule-batch-form {
+  margin-bottom: 18px;
+}
+
+.weekday-group {
+  white-space: nowrap;
+}

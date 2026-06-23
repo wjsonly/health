@@ -1,0 +1,34 @@
+.therapist-card {
+  align-items: flex-start;
+  display: flex;
+}
+
+.therapist-info {
+  flex: 1;
+}
+
+.tag-row {
+  margin-top: 16rpx;
+}
+
+.card-actions {
+  align-items: center;
+  display: flex;
+  gap: 14rpx;
+  justify-content: space-between;
+  margin-top: 18rpx;
+}
+
+.mini-link {
+  color: #66706a;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.btn-small {
+  font-size: 24rpx;
+  height: 64rpx;
+  line-height: 64rpx;
+  min-width: 148rpx;
+  padding: 0 20rpx;
+}

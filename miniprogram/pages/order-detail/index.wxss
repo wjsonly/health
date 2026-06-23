@@ -1,0 +1,69 @@
+.detail-card,
+.content-card {
+  padding: 28rpx;
+}
+
+.detail-title {
+  font-size: 36rpx;
+  line-height: 48rpx;
+}
+
+.info-row {
+  align-items: center;
+  border-bottom: 1rpx solid #eef2ec;
+  display: flex;
+  justify-content: space-between;
+  padding: 18rpx 0;
+}
+
+.info-row:last-child {
+  border-bottom: 0;
+}
+
+.link-text {
+  color: #2f6b4f;
+  font-weight: 700;
+}
+
+.progress-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.progress-step {
+  align-items: center;
+  color: #9aa49d;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  font-size: 22rpx;
+  line-height: 30rpx;
+  position: relative;
+}
+
+.progress-dot {
+  background: #d8e0da;
+  border-radius: 50%;
+  height: 20rpx;
+  margin-bottom: 10rpx;
+  width: 20rpx;
+}
+
+.progress-step-active {
+  color: #2f6b4f;
+  font-weight: 700;
+}
+
+.progress-step-active .progress-dot {
+  background: #2f6b4f;
+}
+
+.footer-action {
+  display: flex;
+  gap: 16rpx;
+  margin-top: 36rpx;
+}
+
+.footer-btn {
+  flex: 1;
+}
