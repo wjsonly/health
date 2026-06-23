@@ -4,4 +4,3 @@ backend/target/
 .env
 data/uploads/
 application.yml
-.env.example
