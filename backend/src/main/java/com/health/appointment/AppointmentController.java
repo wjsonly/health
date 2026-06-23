@@ -34,10 +34,12 @@ public class AppointmentController {
 
     @PostMapping("/api/appointments")
     public ApiResponse<PublicAppointmentResponse> createAppointment(
-            @RequestAttribute(MiniProgramAuthInterceptor.PRINCIPAL_ATTRIBUTE) MiniProgramPrincipal principal,
+            @RequestAttribute(value = MiniProgramAuthInterceptor.PRINCIPAL_ATTRIBUTE, required = false)
+            MiniProgramPrincipal principal,
             @Valid @RequestBody AppointmentCreateRequest request
     ) {
-        return ApiResponse.ok(PublicAppointmentResponse.from(appointmentService.create(request.withUserId(principal.id()))));
+        AppointmentCreateRequest createRequest = principal == null ? request : request.withUserId(principal.id());
+        return ApiResponse.ok(PublicAppointmentResponse.from(appointmentService.create(createRequest)));
     }
 
     @GetMapping("/api/appointments")

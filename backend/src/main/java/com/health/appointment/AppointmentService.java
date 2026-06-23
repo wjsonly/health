@@ -59,8 +59,10 @@ public class AppointmentService {
 
     @Transactional
     public Appointment create(AppointmentCreateRequest request) {
-        userRepository.findById(request.userId())
-                .orElseThrow(() -> new BadRequestException("用户不存在"));
+        if (request.userId() != null) {
+            userRepository.findById(request.userId())
+                    .orElseThrow(() -> new BadRequestException("用户不存在"));
+        }
         storeRepository.findById(request.storeId())
                 .orElseThrow(() -> new BadRequestException("门店信息未配置"));
         ServiceItem item = serviceItemRepository.findById(request.serviceItemId())

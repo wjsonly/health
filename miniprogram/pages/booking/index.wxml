@@ -63,6 +63,8 @@
     <view class="section">
       <view class="section-title">联系人</view>
       <view class="form-card">
+        <!-- 个人主体小程序暂不支持手机号快速验证能力，先关闭授权入口。 -->
+        <!--
         <view wx:if="{{!wechatAuthorized}}" class="auth-panel">
           <view class="auth-copy">预约需先授权微信手机号</view>
           <button
@@ -75,6 +77,7 @@
           </button>
         </view>
         <view wx:else class="auth-state">已授权手机号 {{authPhone}}</view>
+        -->
         <view class="field">
           <view class="label">姓名</view>
           <input class="input" placeholder="请输入到店人姓名" value="{{contactName}}" bindinput="onContactNameInput" />

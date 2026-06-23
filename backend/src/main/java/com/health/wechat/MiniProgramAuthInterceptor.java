@@ -22,6 +22,7 @@ public class MiniProgramAuthInterceptor implements HandlerInterceptor {
     private static final String ACTIVE = "ACTIVE";
     private static final String BEARER_PREFIX = "Bearer ";
     private static final String AVAILABLE_SLOTS_PATH = "/api/appointments/available-slots";
+    private static final String APPOINTMENTS_PATH = "/api/appointments";
 
     private final MiniProgramTokenService tokenService;
     private final UserRepository userRepository;
@@ -40,10 +41,14 @@ public class MiniProgramAuthInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws IOException {
-        if (HttpMethod.OPTIONS.matches(request.getMethod()) || AVAILABLE_SLOTS_PATH.equals(request.getRequestURI())) {
+        if (HttpMethod.OPTIONS.matches(request.getMethod())
+                || AVAILABLE_SLOTS_PATH.equals(request.getRequestURI())) {
             return true;
         }
         String authorization = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (isGuestBookingRequest(request) && (authorization == null || !authorization.startsWith(BEARER_PREFIX))) {
+            return true;
+        }
         if (authorization == null || !authorization.startsWith(BEARER_PREFIX)) {
             writeUnauthorized(response, "请先完成微信授权登录");
             return false;
@@ -61,6 +66,10 @@ public class MiniProgramAuthInterceptor implements HandlerInterceptor {
         }
         request.setAttribute(PRINCIPAL_ATTRIBUTE, principal);
         return true;
+    }
+
+    private boolean isGuestBookingRequest(HttpServletRequest request) {
+        return HttpMethod.POST.matches(request.getMethod()) && APPOINTMENTS_PATH.equals(request.getRequestURI());
     }
 
     private void writeUnauthorized(HttpServletResponse response, String message) throws IOException {

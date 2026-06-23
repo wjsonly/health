@@ -284,10 +284,11 @@ Page({
       wx.showToast({ title: '请选择预约时间', icon: 'none' })
       return
     }
-    if (!this.data.wechatAuthorized || !api.getToken()) {
-      wx.showToast({ title: '请先授权微信手机号', icon: 'none' })
-      return
-    }
+    // 个人主体小程序暂不支持手机号快速验证能力，先允许填写手机号后直接预约。
+    // if (!this.data.wechatAuthorized || !api.getToken()) {
+    //   wx.showToast({ title: '请先授权微信手机号', icon: 'none' })
+    //   return
+    // }
     if (!this.data.contactName || !this.data.contactPhone) {
       wx.showToast({ title: '请填写联系人和手机号', icon: 'none' })
       return
@@ -295,7 +296,7 @@ Page({
 
     this.setData({ submitting: true, submitText: '提交中...' })
     try {
-      const appointment = await api.createAppointment({
+      await api.createAppointment({
         storeId: 1,
         serviceItemId: Number(this.data.serviceItemId),
         therapistId: Number(this.data.therapistId),
@@ -306,7 +307,10 @@ Page({
         userNote: this.data.userNote
       })
       this.setData({ submitting: false, submitText: '提交预约' })
-      wx.navigateTo({ url: `/pages/order-detail/index?id=${appointment.id}` })
+      wx.showToast({ title: '预约成功', icon: 'success' })
+      setTimeout(() => {
+        wx.switchTab({ url: '/pages/home/index' })
+      }, 800)
     } catch (error) {
       this.setData({ submitting: false, submitText: '提交预约' })
       showError(error)
